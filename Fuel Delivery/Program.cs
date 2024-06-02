@@ -28,6 +28,10 @@ builder.Services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifes
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.AddIdentity<User , IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+//builder.Services.AddIdentity<Driver, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentityCore<Driver>().AddRoles<IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+
 
 builder.Services.AddAutoMapper(typeof(MapperInitilizer));
 builder.Services.AddScoped<IAuthManger, AuthManger>();

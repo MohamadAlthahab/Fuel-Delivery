@@ -3,6 +3,7 @@ using Fuel_Delivery.Data;
 using Fuel_Delivery.IRepository;
 using Fuel_Delivery.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fuel_Delivery.Controllers
@@ -13,22 +14,44 @@ namespace Fuel_Delivery.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public DriverController(IMapper mapper, IUnitOfWork unitOfWork)
+        private readonly UserManager<Driver> _driverManager;
+        public DriverController(IMapper mapper, IUnitOfWork unitOfWork, UserManager<Driver> driverManager)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _driverManager = driverManager;
         }
-        [HttpPost("AddDriver")]
+
+
+        [HttpPost]
+        [Route("AddDriver")]
         public async Task<IActionResult> AddDriver(DriverDTO driverDTO)
         {
             if (ModelState.IsValid)
             {
                 var driver = _mapper.Map<Driver>(driverDTO);
-                await _unitOfWork.Driver.Insert(driver);
-                await _unitOfWork.Save();
+                var result = await _driverManager.CreateAsync(driver, driverDTO.Password);
+                await _driverManager.AddPasswordAsync(driver , driverDTO.Password);
+                if (result.Succeeded)
+                {
+                    return Ok("Success");
+                }
             }
-            return Ok(driverDTO);
+            return BadRequest();
 
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteDriver(int id)
+        {
+            var driver = await _unitOfWork.Driver.Get(u => u.Id == id);
+            await _unitOfWork.Driver.Remove(id);
+            await _unitOfWork.Save();
+
+            return NoContent();
         }
     }
 }

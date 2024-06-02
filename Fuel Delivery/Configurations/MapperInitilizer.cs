@@ -10,9 +10,11 @@ namespace Fuel_Delivery.Configurations
         public MapperInitilizer() 
         {
             CreateMap<User, NewUserDTO>().ReverseMap();
-            CreateMap<User , LoginUserDTO>().ReverseMap();
+            CreateMap<User , LoginDTO>().ReverseMap();
             CreateMap<Driver, DriverDTO>().ReverseMap();
             CreateMap<Fuel, FuelDTO>().ReverseMap();
+            CreateMap<Admin, AdminDTO>().ReverseMap();
+            CreateMap<Car, CarDTO>().ReverseMap();
         }
     }
 }

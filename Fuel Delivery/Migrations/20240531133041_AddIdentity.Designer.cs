@@ -4,6 +4,7 @@ using Fuel_Delivery.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fuel_Delivery.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240531133041_AddIdentity")]
+    partial class AddIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,57 +91,15 @@ namespace Fuel_Delivery.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "32a9e1de-224b-4591-9556-3cf946d284b6",
+                            ConcurrencyStamp = "26b073cb-f441-4842-bd4b-afca5f8ec450",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Password = "Admin",
                             Phone = "0933600500",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "26e6f85d-ed0e-47cc-b55d-8b480caab407",
+                            SecurityStamp = "86f04564-1b13-4433-82b6-3f3dc70634ab",
                             TwoFactorEnabled = false
                         });
-                });
-
-            modelBuilder.Entity("Fuel_Delivery.Data.Car", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CarModel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CarNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("CurrentFuelCapacity")
-                        .HasColumnType("float");
-
-                    b.Property<int>("DriverId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FuelCapacity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FuelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("Fuel_Delivery.Data.Driver", b =>

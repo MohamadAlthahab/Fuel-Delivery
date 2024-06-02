@@ -4,7 +4,7 @@ namespace Fuel_Delivery.Services
 {
     public interface IAuthManger
     {
-        Task<bool> ValidateUser(LoginUserDTO loginUserDTO);
+        Task<bool> ValidateUser(LoginDTO loginUserDTO);
         Task<string> CreateToken();
     }
 }

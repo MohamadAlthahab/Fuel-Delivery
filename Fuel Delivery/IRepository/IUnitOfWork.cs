@@ -8,6 +8,8 @@ namespace Fuel_Delivery.IRepository
         IGenericRepository<Role> Role { get; }
         IGenericRepository<Driver> Driver { get; }
         IGenericRepository<Fuel> Fuel { get; }
+        IGenericRepository<Admin> Admin { get; }
+        IGenericRepository<Car> Car { get; }
         Task Save();
     }
 }

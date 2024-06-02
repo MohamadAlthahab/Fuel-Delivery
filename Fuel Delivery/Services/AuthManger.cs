@@ -31,7 +31,7 @@ namespace Fuel_Delivery.Services
 
         private JwtSecurityToken GeneratTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
-            var JwtSettings = _configuration.GetSection("Jwt");
+            var JwtSettings = _configuration.GetSection("JWT");
             var expiration = DateTime.Now.AddMinutes(Convert.ToDouble
                 (JwtSettings.GetSection("lifetime").Value));
             var token = new JwtSecurityToken(
@@ -45,30 +45,39 @@ namespace Fuel_Delivery.Services
 
         private async Task<List<Claim>> GetClaims()
         {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, _user.Id)
+            /*  var claims = new List<Claim>
+              {
+                  new Claim(ClaimTypes.NameIdentifier, _user.Id)
 
-            };
+              };
+              var roles = await _userManger.GetRolesAsync(_user);
+
+              foreach (var role in roles)
+              {
+                  claims.Add(new Claim(ClaimTypes.Role, role));
+              }*/
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, _user.UserName));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, _user.Id));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
             var roles = await _userManger.GetRolesAsync(_user);
-
             foreach (var role in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim(ClaimTypes.Role, role.ToString()));
             }
             return claims;
         }
 
         private SigningCredentials GetsigningCredentials()
         {
-            var JwtSettings = _configuration.GetSection("Jwt");
-            var key = _configuration.GetSection("Jwt:KEY").Value;
+            var JwtSettings = _configuration.GetSection("JWT");
+            var key = _configuration.GetSection("JWT:KEY").Value;
             var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
 
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public async Task<bool> ValidateUser(LoginUserDTO userDTO)
+        public async Task<bool> ValidateUser(LoginDTO userDTO)
         {
             _user = await _userManger.FindByNameAsync(userDTO.PhoneNumber);
             return (_user != null && await _userManger.CheckPasswordAsync(_user, userDTO.Password));

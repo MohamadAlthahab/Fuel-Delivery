@@ -10,6 +10,8 @@ namespace Fuel_Delivery.Repository
         private IGenericRepository<Role> _role;
         private IGenericRepository<Driver> _driver;
         private IGenericRepository<Fuel> _fuel;
+        private IGenericRepository<Admin> _admin;
+        private IGenericRepository<Car> _car;
 
         public UnitOfWork(AppDbContext appDbContext)
         {
@@ -19,6 +21,8 @@ namespace Fuel_Delivery.Repository
         public IGenericRepository<Role> Role => _role ??= new GenericRepository<Role>(_appDbContext);
         public IGenericRepository<Driver> Driver => _driver ??= new GenericRepository<Driver>(_appDbContext);
         public IGenericRepository<Fuel> Fuel => _fuel ??= new GenericRepository<Fuel>(_appDbContext);
+        public IGenericRepository<Admin> Admin => _admin ??= new GenericRepository<Admin>(_appDbContext);
+        public IGenericRepository<Car> Car => _car ??= new GenericRepository<Car>(_appDbContext);
 
         public void Dispose()
         {

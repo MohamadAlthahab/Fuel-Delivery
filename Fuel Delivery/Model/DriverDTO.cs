@@ -5,6 +5,8 @@ namespace Fuel_Delivery.Model
     public class DriverDTO
     {
         [Required]
+        public string Username { get; set; }
+        [Required]
         public string FullName { get; set; }
         [Required]
         [StringLength(10)]
@@ -16,5 +18,9 @@ namespace Fuel_Delivery.Model
         [StringLength (11)]
         [RegularExpression("^([0-9]{11})$", ErrorMessage ="Invalid ID Nember")]
         public string IDNumber { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
     }
 }

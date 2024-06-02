@@ -3,7 +3,7 @@
 namespace Fuel_Delivery.Model
 {
 
-    public class LoginUserDTO
+    public class LoginDTO
     {
         [Required]
         [RegularExpression("^([0-9]{10})$", ErrorMessage = "Invalid Phone nember")]
@@ -13,7 +13,7 @@ namespace Fuel_Delivery.Model
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }
-    public class NewUserDTO : LoginUserDTO
+    public class NewUserDTO : LoginDTO
     {
         [Required]
         public string Username { get; set; }

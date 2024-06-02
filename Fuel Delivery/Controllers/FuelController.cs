@@ -18,13 +18,26 @@ namespace Fuel_Delivery.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        [HttpPost("AddFuel")]
+        [HttpPost]
+        [Route("AddFuel")]
         public async Task<IActionResult> AddFuel(FuelDTO fuelDTO)
         {
             if(ModelState.IsValid)
             {
                 var fuel = _mapper.Map<Fuel>(fuelDTO);
                 await _unitOfWork.Fuel.Insert(fuel);
+                await _unitOfWork.Save();
+            }
+            return Ok(fuelDTO);
+        }
+        [HttpPut("{id=int}")]
+        public async Task<IActionResult> UpdateFuel(int id, FuelDTO fuelDTO)
+        {
+            if(ModelState.IsValid)
+            {
+                var fuel = await _unitOfWork.Fuel.Get(u => u.Id == id);
+                _mapper.Map(fuelDTO, fuel);
+                _unitOfWork.Fuel.Update(fuel);
                 await _unitOfWork.Save();
             }
             return Ok(fuelDTO);

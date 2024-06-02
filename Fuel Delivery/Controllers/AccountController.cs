@@ -73,11 +73,7 @@ namespace Fuel_Delivery.Controllers
                         claims.Add(new Claim(ClaimTypes.Name, user.UserName));
                         claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
                         claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-                        var roles = await _userManager.GetRolesAsync(user);
-                        foreach (var role in roles)
-                        {
-                            claims.Add(new Claim(ClaimTypes.Role, role.ToString()));
-                        }
+                        claims.Add(new Claim(ClaimTypes.Role, "User"));
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SecretKey"]));
                         var sc = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -122,7 +118,7 @@ namespace Fuel_Delivery.Controllers
                         var claims = new List<Claim>();
                         claims.Add(new Claim(ClaimTypes.NameIdentifier , admin.Id.ToString()));
                         claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-
+                        claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SecretKey"]));
                         var sc = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -170,7 +166,7 @@ namespace Fuel_Delivery.Controllers
                         claims.Add(new Claim(ClaimTypes.Name, driver.FullName));
                         claims.Add(new Claim(ClaimTypes.NameIdentifier, driver.Id.ToString()));
                         claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-                       
+                        claims.Add(new Claim(ClaimTypes.Role, "Driver"));
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SecretKey"]));
                         var sc = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

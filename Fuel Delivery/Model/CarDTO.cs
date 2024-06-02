@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fuel_Delivery.Model
 {
-    public class CarDTO
+    public class CarDTO : UpdateCarDTO
     {
         [Required]
         public string CarModel { get; set; }
@@ -11,14 +11,13 @@ namespace Fuel_Delivery.Model
         public string CarNumber { get; set; }
         [Required]
         public string FuelCapacity { get; set; }
-        [Required]
+    }
+    public class UpdateCarDTO
+    {
         public string Location { get; set; }
-        [Required]
         public double CurrentFuelCapacity { get; set; }
         public string Status { get; set; }
-        [Required]
         public int FuelId { get; set; }
-        [Required]
         public int DriverId { get; set; }
     }
 }

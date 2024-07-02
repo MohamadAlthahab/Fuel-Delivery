@@ -16,6 +16,7 @@ namespace Fuel_Delivery.Configurations
             CreateMap<Admin, AdminDTO>().ReverseMap();
             CreateMap<Car, CarDTO>().ReverseMap();
             CreateMap<Car, UpdateCarDTO>().ReverseMap();
+            CreateMap<Order, OrderDTO>().ReverseMap();
         }
     }
 }

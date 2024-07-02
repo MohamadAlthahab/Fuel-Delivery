@@ -20,7 +20,6 @@ namespace Fuel_Delivery.Model
         public string IDNumber { get; set; }
 
         [Required]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }

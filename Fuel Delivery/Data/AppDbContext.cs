@@ -15,6 +15,7 @@ namespace Fuel_Delivery.Data
         public DbSet<Fuel> Fuel { get; set; }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Car> Car { get; set; }
+        public DbSet<Order> Order { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

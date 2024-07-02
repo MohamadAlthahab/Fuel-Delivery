@@ -10,6 +10,7 @@ namespace Fuel_Delivery.IRepository
         IGenericRepository<Fuel> Fuel { get; }
         IGenericRepository<Admin> Admin { get; }
         IGenericRepository<Car> Car { get; }
+        IGenericRepository<Order> Order { get; }
         Task Save();
     }
 }
